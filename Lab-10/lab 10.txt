@@ -1,0 +1,101 @@
+ Switch to the database
+use BANK_INFO
+
+ Create the 'Deposit' collection and insert the sample data
+db.Deposit.insertMany([
+  { ACTNO: 101, CNAME: "ANIL", BNAME: "VRCE", AMOUNT: 1000, ADATE: "1-3-95" },
+  { ACTNO: 102, CNAME: "SUNIL", BNAME: "AJNI", AMOUNT: 5000, ADATE: "4-1-96" },
+  { ACTNO: 103, CNAME: "MEHUL", BNAME: "KAROLBAGH", AMOUNT: 3500, ADATE: "17-11-95" },
+  { ACTNO: 104, CNAME: "MADHURI", BNAME: "CHANDI", AMOUNT: 1200, ADATE: "17-12-95" },
+  { ACTNO: 105, CNAME: "PRMOD", BNAME: "M.G. ROAD", AMOUNT: 3000, ADATE: "27-3-96" },
+  { ACTNO: 106, CNAME: "SANDIP", BNAME: "ANDHERI", AMOUNT: 2000, ADATE: "31-3-96" },
+  { ACTNO: 107, CNAME: "SHIVANI", BNAME: "VIRAR", AMOUNT: 1000, ADATE: "5-9-95" },
+  { ACTNO: 108, CNAME: "KRANTI", BNAME: "NEHRU PLACE", AMOUNT: 5000, ADATE: "2-7-95" }
+]);
+
+ 1. Update the age of John's to 31
+db.Deposit.updateOne({ CNAME: "John" }, { $set: { age: 31 } });
+
+ 2. Update the city of all students from 'New York' to 'New Jersey'
+db.Deposit.updateMany({ BNAME: "New York" }, { $set: { BNAME: "New Jersey" } });
+
+ 3. Set isActive to false for every student older than 35
+db.Deposit.updateMany({ age: { $gt: 35 } }, { $set: { isActive: false } });
+
+ 4. Increment the age of all students by 1 year
+db.Deposit.updateMany({}, { $inc: { age: 1 } });
+
+ 5. Set the city of 'Eva' to 'Cambridge'
+db.Deposit.updateOne({ CNAME: "Eva" }, { $set: { BNAME: "Cambridge" } });
+
+ 6. Update 'Sophia's isActive status to false
+db.Deposit.updateOne({ CNAME: "Sophia" }, { $set: { isActive: false } });
+
+ 7. Update the city field of students aged below 30 to 'San Diego'
+db.Deposit.updateMany({ age: { $lt: 30 } }, { $set: { BNAME: "San Diego" } });
+
+ 8. Rename the age field to years for all documents
+db.Deposit.updateMany({}, { $rename: { "age": "years" } });
+
+ 9. Update 'Nick' to make him active (isActive = true)
+db.Deposit.updateOne({ CNAME: "Nick" }, { $set: { isActive: true } });
+
+ 10. Update all documents to add a new field country with the value 'USA'
+db.Deposit.updateMany({}, { $set: { country: "USA" } });
+
+ 11. Update 'David's city to 'Orlando'
+db.Deposit.updateOne({ CNAME: "David" }, { $set: { BNAME: "Orlando" } });
+
+ 12. Multiply the age of all students by 2
+db.Deposit.updateMany({}, { $mul: { age: 2 } });
+
+ 13. Unset (remove) the city field for 'Tom'
+db.Deposit.updateOne({ CNAME: "Tom" }, { $unset: { BNAME: "" } });
+
+ 14. Add a new field premiumUser and set it to true for users older than 30
+db.Deposit.updateMany({ age: { $gt: 30 } }, { $set: { premiumUser: true } });
+
+ 15. Set isActive to true for 'Jane'
+db.Deposit.updateOne({ CNAME: "Jane" }, { $set: { isActive: true } });
+
+ 16. Update isActive field of 'Lucy' to false
+db.Deposit.updateOne({ CNAME: "Lucy" }, { $set: { isActive: false } });
+
+ 17. Delete a document of 'Nick' from the collection
+db.Deposit.deleteOne({ CNAME: "Nick" });
+
+ 18. Delete all students who are inactive (isActive = false)
+db.Deposit.deleteMany({ isActive: false });
+
+ 19. Delete all students who live in 'New York'
+db.Deposit.deleteMany({ BNAME: "New York" });
+
+ 20. Delete all the students aged above 35
+db.Deposit.deleteMany({ age: { $gt: 35 } });
+
+ 21. Delete a student named 'Olivia' from the collection
+db.Deposit.deleteOne({ CNAME: "Olivia" });
+
+ 22. Delete all the students whose age is below 25
+db.Deposit.deleteMany({ age: { $lt: 25 } });
+
+ 23. Delete the first student whose isActive field is true
+db.Deposit.findOneAndDelete({ isActive: true });  
+
+ 24. Delete all students from 'Los Angeles'
+db.Deposit.deleteMany({ BNAME: "Los Angeles" });
+
+ 25. Delete all students who have city field missing
+db.Deposit.deleteMany({ BNAME: { $exists: false } });
+
+ 26. Rename 'city' field to 'location' for all documents
+db.Deposit.updateMany({}, { $rename: { "BNAME": "location" } });
+
+ 27. Rename the name field to FullName for 'John'
+db.Deposit.updateOne({ CNAME: "John" }, { $rename: { "CNAME": "FullName" } });
+
+ 28. Rename the isActive field to status for all documents
+db.Deposit.updateMany({}, { $rename: { "isActive": "status" } });
+
+ 29. Rename age to yearsOld for everyone from 'San Francisco' student only
+db.Deposit.updateMany({ BNAME: "San Francisco" }, { $rename: { "age": "yearsOld" } });
